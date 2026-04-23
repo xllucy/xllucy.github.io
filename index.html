@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucy Wang — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --matcha:#5C7A54;--matcha-light:#EDF2EA;--matcha-mid:#C8D9C3;--matcha-dark:#3A5233;
+  --cream:#F9FBF7;--stone:#7A8076;--ink:#2A2E27;--border:rgba(92,122,84,0.18);
+  --serif:'Instrument Serif',serif;
+}
+body{font-family:'Syne',sans-serif;background:#F4F7F2;color:var(--ink);-webkit-font-smoothing:antialiased}
+.page{max-width:640px;margin:0 auto;padding:0 1.25rem 3rem}
+
+.hero{text-align:center;padding:2.5rem 1rem 1.5rem}
+.avatar-wrap{position:relative;width:88px;height:88px;margin:0 auto 1rem}
+.avatar{width:88px;height:88px;border-radius:50%;background:var(--matcha-light);border:2px solid var(--matcha-mid);display:flex;align-items:center;justify-content:center;font-size:32px;font-family:var(--serif);color:var(--matcha-dark);font-style:italic;overflow:hidden;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover;display:none}
+.avatar-hint{position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--matcha);border:2px solid var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.avatar-hint svg{width:11px;height:11px;fill:white}
+.hero-name{font-family:var(--serif);font-size:2rem;font-style:italic;color:var(--ink);line-height:1.1;margin-bottom:4px}
+.hero-handle{font-size:12px;color:var(--stone);letter-spacing:0.08em;margin-bottom:1rem}
+.hero-bio{font-size:13.5px;color:var(--stone);line-height:1.8;max-width:340px;margin:0 auto 1.25rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.htag{font-size:11px;padding:4px 12px;border-radius:100px;background:var(--matcha-light);color:var(--matcha-dark);border:0.5px solid var(--border);letter-spacing:0.04em}
+.deco{color:var(--matcha-mid);font-size:13px;letter-spacing:0.15em;display:block;text-align:center;padding:1rem 0 0}
+
+.tab-bar{display:flex;border-bottom:1px solid var(--matcha-mid);margin-bottom:1.75rem;margin-top:1.25rem}
+.tab-btn{flex:1;padding:10px 0;font-size:12px;font-family:'Syne',sans-serif;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--stone);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.2s,border-color 0.2s}
+.tab-btn.active{color:var(--matcha-dark);border-bottom:2px solid var(--matcha)}
+.tab-btn:hover:not(.active){color:var(--ink)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+.section-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:1rem;padding-left:2px}
+
+.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem}
+.photo-slot{aspect-ratio:1;border-radius:14px;background:var(--cream);border:1.5px dashed var(--matcha-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s,background 0.2s;position:relative}
+.photo-slot:hover{border-color:var(--matcha);background:var(--matcha-light)}
+.photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:none}
+.photo-slot-icon{width:28px;height:28px;margin-bottom:6px;opacity:0.4}
+.photo-slot-icon svg{width:28px;height:28px;fill:var(--matcha)}
+.photo-slot-label{font-size:10px;color:var(--stone);letter-spacing:0.06em;text-transform:uppercase}
+
+.photo-banner{width:100%;aspect-ratio:3/1;border-radius:16px;background:var(--cream);border:1.5px dashed var(--matcha-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;margin-bottom:2rem;position:relative;transition:border-color 0.2s,background 0.2s}
+.photo-banner:hover{border-color:var(--matcha);background:var(--matcha-light)}
+.photo-banner img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:none}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem}
+.stat{background:var(--cream);border:0.5px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
+.stat-num{font-family:var(--serif);font-size:1.6rem;font-style:italic;color:var(--matcha-dark);line-height:1}
+.stat-label{font-size:10px;color:var(--stone);margin-top:3px;letter-spacing:0.04em}
+
+.exp-list{background:var(--cream);border:0.5px solid var(--border);border-radius:16px;padding:1.25rem 1.25rem 0.25rem;margin-bottom:2rem}
+.exp-row{display:flex;gap:1rem;padding:0.875rem 0;border-bottom:0.5px solid var(--border);align-items:flex-start}
+.exp-row:last-child{border-bottom:none;padding-bottom:0.25rem}
+.exp-dot{width:8px;height:8px;border-radius:50%;background:var(--matcha-mid);margin-top:5px;flex-shrink:0}
+.exp-role{font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.exp-place{font-size:12px;color:var(--matcha-dark);margin-bottom:2px}
+.exp-date{font-size:11px;color:var(--stone)}
+
+.skills-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:2rem}
+.skill{font-size:12px;padding:5px 12px;border-radius:8px;background:var(--cream);color:var(--ink);border:0.5px solid var(--border)}
+
+.ach-list{display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem}
+.ach-item{display:flex;gap:10px;align-items:flex-start;padding:0.875rem 1rem;background:var(--cream);border:0.5px solid var(--border);border-radius:12px}
+.ach-year{font-size:11px;color:var(--matcha-dark);font-weight:500;min-width:32px;margin-top:1px}
+.ach-text{font-size:13px;color:var(--ink);line-height:1.5}
+
+.proj-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:1.5rem}
+.proj-card{background:var(--cream);border:0.5px solid var(--border);border-radius:18px;overflow:hidden;transition:border-color 0.2s,transform 0.15s}
+.proj-card:hover{border-color:var(--matcha-mid);transform:translateY(-2px)}
+.proj-card.tinted{background:var(--matcha-light)}
+.proj-card.warm{background:#F0EDE8;border-color:rgba(139,94,60,0.15)}
+
+.proj-photo{width:100%;aspect-ratio:16/7;background:var(--matcha-light);border-bottom:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;transition:background 0.2s}
+.proj-photo:hover{background:var(--matcha-mid)}
+.proj-card.warm .proj-photo{background:#E8E0D6;border-color:rgba(139,94,60,0.15)}
+.proj-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:none}
+.proj-photo-icon svg{width:24px;height:24px;fill:var(--matcha);opacity:0.45}
+.proj-photo-hint{font-size:10px;color:var(--stone);margin-top:5px;letter-spacing:0.06em;text-transform:uppercase}
+
+.proj-body{padding:1.25rem}
+.proj-meta{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--stone);margin-bottom:5px}
+.proj-card.warm .proj-meta{color:#8B5E3C}
+.proj-title{font-family:var(--serif);font-size:1.15rem;font-style:italic;color:var(--ink);line-height:1.3;margin-bottom:7px}
+.proj-card.warm .proj-title{color:#3e2210}
+.proj-desc{font-size:12.5px;color:var(--stone);line-height:1.75;margin-bottom:10px}
+.proj-card.warm .proj-desc{color:#9a7256}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.proj-pill{font-size:10px;padding:3px 10px;border-radius:100px;background:var(--matcha-light);color:var(--matcha-dark);border:0.5px solid var(--border)}
+.proj-card.tinted .proj-pill{background:rgba(255,255,255,0.55);border-color:rgba(92,122,84,0.22)}
+.proj-card.warm .proj-pill{background:#F5EDE3;color:#8B5E3C;border-color:rgba(139,94,60,0.2)}
+.impact-rows{font-size:12px;color:var(--matcha-dark);line-height:1.9;max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.impact-rows.open{max-height:300px}
+.expand-btn{font-size:11px;color:var(--matcha-dark);background:none;border:none;cursor:pointer;padding:0;font-family:'Syne',sans-serif}
+.expand-btn:hover{color:var(--matcha)}
+
+.add-proj-btn{width:100%;padding:14px;border-radius:16px;border:1.5px dashed var(--matcha-mid);background:none;font-family:'Syne',sans-serif;font-size:13px;color:var(--stone);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s,border-color 0.2s,color 0.2s;margin-bottom:2rem}
+.add-proj-btn:hover{background:var(--matcha-light);border-color:var(--matcha);color:var(--matcha-dark)}
+.add-icon{width:20px;height:20px;border-radius:50%;background:var(--matcha-light);border:1px solid var(--matcha-mid);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;color:var(--matcha)}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(42,46,39,0.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--cream);border-radius:20px;padding:1.75rem;width:100%;max-width:480px;border:0.5px solid var(--border);max-height:90vh;overflow-y:auto}
+.modal h3{font-family:var(--serif);font-size:1.2rem;font-style:italic;color:var(--ink);margin-bottom:1.25rem}
+.modal-field{margin-bottom:1rem}
+.modal-field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--stone);margin-bottom:5px}
+.modal-field input,.modal-field textarea,.modal-field select{width:100%;padding:9px 12px;border:0.5px solid var(--matcha-mid);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;background:white;color:var(--ink);outline:none}
+.modal-field textarea{resize:vertical;min-height:72px}
+.modal-field input:focus,.modal-field textarea:focus{border-color:var(--matcha)}
+.modal-actions{display:flex;gap:10px;margin-top:1.25rem}
+.modal-save{flex:1;padding:10px;border-radius:10px;background:var(--matcha-dark);color:white;border:none;font-family:'Syne',sans-serif;font-size:13px;font-weight:500;cursor:pointer}
+.modal-save:hover{background:var(--matcha)}
+.modal-cancel{padding:10px 18px;border-radius:10px;background:none;color:var(--stone);border:0.5px solid var(--border);font-family:'Syne',sans-serif;font-size:13px;cursor:pointer}
+.modal-cancel:hover{background:var(--matcha-light)}
+
+.contact-card{background:var(--matcha-dark);border-radius:20px;padding:2rem;text-align:center;margin-bottom:1.5rem}
+.contact-card h3{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:#E8F0EB;margin-bottom:8px}
+.contact-card p{font-size:13px;color:rgba(232,240,235,0.7);line-height:1.8;margin-bottom:1.5rem}
+.contact-links{display:flex;flex-direction:column;gap:8px}
+.clink{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;background:rgba(255,255,255,0.1);border-radius:10px;text-decoration:none;border:0.5px solid rgba(255,255,255,0.12);transition:background 0.2s}
+.clink:hover{background:rgba(255,255,255,0.17)}
+.clink-label{font-size:11px;color:rgba(232,240,235,0.5);text-transform:uppercase;letter-spacing:0.07em}
+.clink-val{font-size:13px;color:#E8F0EB}
+.footer-note{text-align:center;font-size:11px;color:var(--stone);padding-top:0.5rem}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="hero">
+  <div class="avatar-wrap">
+    <div class="avatar" id="avatar-display" onclick="triggerUpload('avatar-upload')" title="click to add photo">
+      <span id="avatar-letter">L</span>
+      <img id="avatar-img" alt="profile photo">
+    </div>
+    <div class="avatar-hint" onclick="triggerUpload('avatar-upload')">
+      <svg viewBox="0 0 16 16"><path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/></svg>
+    </div>
+    <input type="file" id="avatar-upload" accept="image/*" style="display:none" onchange="loadImage(this,'avatar-img','avatar-letter')">
+  </div>
+  <div class="hero-name">Xiao Lan (Lucy) Wang</div>
+  <div class="hero-handle">business analyst · digital strategist · melbourne</div>
+  <p class="hero-bio">product-driven BA turning complex processes into impactful digital things ♡ curious about data, design, and what's next in AI</p>
+  <div class="hero-tags">
+    <span class="htag">✿ agile</span>
+    <span class="htag">✿ data & BI</span>
+    <span class="htag">✿ microsoft dynamics</span>
+    <span class="htag">✿ not-for-profit</span>
+    <span class="htag">✿ AI research</span>
+  </div>
+</div>
+
+<span class="deco">· · · · · · · · · · ·</span>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('profile')">profile</button>
+  <button class="tab-btn" onclick="switchTab('projects')">projects</button>
+  <button class="tab-btn" onclick="switchTab('contact')">contact</button>
+</div>
+
+<!-- PROFILE TAB -->
+<div id="tab-profile" class="tab-panel active">
+
+  <div class="section-label">✦ a few moments</div>
+  <div class="photo-strip">
+    <div class="photo-slot" onclick="triggerUpload('ps1')">
+      <input type="file" id="ps1" accept="image/*" style="display:none" onchange="loadSlot(this)">
+      <img alt="">
+      <div class="photo-slot-icon"><svg viewBox="0 0 24 24"><path d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"/></svg></div>
+      <div class="photo-slot-label">add photo</div>
+    </div>
+    <div class="photo-slot" onclick="triggerUpload('ps2')">
+      <input type="file" id="ps2" accept="image/*" style="display:none" onchange="loadSlot(this)">
+      <img alt="">
+      <div class="photo-slot-icon"><svg viewBox="0 0 24 24"><path d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"/></svg></div>
+      <div class="photo-slot-label">add photo</div>
+    </div>
+    <div class="photo-slot" onclick="triggerUpload('ps3')">
+      <input type="file" id="ps3" accept="image/*" style="display:none" onchange="loadSlot(this)">
+      <img alt="">
+      <div class="photo-slot-icon"><svg viewBox="0 0 24 24"><path d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 011-1z"/></svg></div>
+      <div class="photo-slot-label">add photo</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">years exp</div></div>
+    <div class="stat"><div class="stat-num">$4M+</div><div class="stat-label">delivered</div></div>
+    <div class="stat"><div class="stat-num">120+</div><div class="stat-label">monthly users</div></div>
+  </div>
+
+  <div class="section-label">✦ experience</div>
+  <div class="exp-list">
+    <div class="exp-row"><div class="exp-dot"></div><div><div class="exp-role">Business Analyst</div><div class="exp-place">Flybuys</div><div class="exp-date">Nov 2024 – present</div></div></div>
+    <div class="exp-row"><div class="exp-dot"></div><div><div class="exp-role">Functional Analyst</div><div class="exp-place">Velrada</div><div class="exp-date">Jun 2021 – Nov 2024</div></div></div>
+    <div class="exp-row"><div class="exp-dot"></div><div><div class="exp-role">Board Director (Vice Chair) · prev. CEO, COO, VRM</div><div class="exp-place">WAUC</div><div class="exp-date">2019 – present</div></div></div>
+    <div class="exp-row"><div class="exp-dot" style="background:rgba(92,122,84,0.4)"></div><div><div class="exp-role">AI Mental Health Volunteer</div><div class="exp-place">Orygen</div><div class="exp-date">2025 – present</div></div></div>
+    <div class="exp-row"><div class="exp-dot" style="background:rgba(92,122,84,0.4)"></div><div><div class="exp-role">Volunteer · Vice Curator Perth Hub</div><div class="exp-place">Global Shapers (World Economic Forum)</div><div class="exp-date">2022 – present</div></div></div>
+  </div>
+
+  <div class="section-label">✦ skills & tools</div>
+  <div class="skills-wrap">
+    <span class="skill">CSPO®</span><span class="skill">PL-200</span><span class="skill">MB-240</span>
+    <span class="skill">Power Platform</span><span class="skill">SQL</span><span class="skill">Snowflake</span>
+    <span class="skill">Power BI</span><span class="skill">Power Apps</span><span class="skill">MS Dynamics 365</span>
+    <span class="skill">Azure DevOps</span><span class="skill">Figma</span><span class="skill">Miro</span>
+    <span class="skill">Confluence</span><span class="skill">Jira</span><span class="skill">Notion</span>
+  </div>
+
+  <div class="section-label">✦ recognition</div>
+  <div class="ach-list">
+    <div class="ach-item"><div class="ach-year">2025</div><div class="ach-text">COP31 youth submission</div></div>
+    <div class="ach-item"><div class="ach-year">2024</div><div class="ach-text">Quarterly Award — Velrada (Peer & Client Recognition)</div></div>
+    <div class="ach-item"><div class="ach-year">2023</div><div class="ach-text">Global Winner — XR Metaverse Policy Hack · Seoul University × Meta</div></div>
+    <div class="ach-item"><div class="ach-year">2022</div><div class="ach-text">Featured thesis research — WA Parliamentary Research Program</div></div>
+    <div class="ach-item"><div class="ach-year">2021</div><div class="ach-text">Winner — emPower Hackathon with City of Nedlands</div></div>
+    <div class="ach-item" style="background:var(--matcha-light);border-color:var(--border)">
+      <div class="ach-year">edu</div>
+      <div class="ach-text" style="color:var(--matcha-dark)">Masters of Electrical Engineering with Distinction · WAM 80.7, UWA 2022</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PROJECTS TAB -->
+<div id="tab-projects" class="tab-panel">
+  <div class="proj-grid" id="proj-grid"></div>
+  <button class="add-proj-btn" onclick="openModal()">
+    <span class="add-icon">+</span>
+    add a project
+  </button>
+</div>
+
+<!-- CONTACT TAB -->
+<div id="tab-contact" class="tab-panel">
+  <div class="photo-banner" onclick="triggerUpload('banner-upload')" title="add a banner photo">
+    <input type="file" id="banner-upload" accept="image/*" style="display:none" onchange="loadSlot(this)">
+    <img id="banner-img" alt="banner">
+    <div class="photo-slot-icon"><svg viewBox="0 0 24 24"><path d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 011-1z"/></svg></div>
+    <div class="photo-slot-label" style="margin-top:5px">add banner photo</div>
+  </div>
+  <div class="contact-card">
+    <h3>say hello ♡</h3>
+    <p>open to BA, product & digital transformation roles<br>across regulated and community sectors</p>
+    <div class="contact-links">
+      <a href="mailto:xlwlucy@gmail.com" class="clink"><span class="clink-label">email</span><span class="clink-val">xlwlucy@gmail.com</span></a>
+      <a href="https://linkedin.com/in/xllwang" target="_blank" class="clink"><span class="clink-label">linkedin</span><span class="clink-val">linkedin.com/in/xllwang</span></a>
+      <a href="tel:+61433459227" class="clink"><span class="clink-label">phone</span><span class="clink-val">0433 459 227</span></a>
+    </div>
+  </div>
+  <div class="footer-note">xiao lan (lucy) wang · 2025 · made with matcha ✿</div>
+</div>
+
+</div>
+
+<!-- ADD PROJECT MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3>add a project ✿</h3>
+    <div class="modal-field"><label>project title</label><input type="text" id="m-title" placeholder="e.g. Campaign Operations Tool"></div>
+    <div class="modal-field"><label>organisation · year</label><input type="text" id="m-org" placeholder="e.g. Flybuys · 2024–present"></div>
+    <div class="modal-field"><label>description</label><textarea id="m-desc" placeholder="what did you do and why did it matter?"></textarea></div>
+    <div class="modal-field"><label>tags (comma separated)</label><input type="text" id="m-tags" placeholder="e.g. agile, snowflake, stakeholder mgmt"></div>
+    <div class="modal-field"><label>impact highlights (one per line)</label><textarea id="m-impact" placeholder="✦ reduced manual queries&#10;✦ $2M+ project supported"></textarea></div>
+    <div class="modal-field"><label>card style</label>
+      <select id="m-style">
+        <option value="">default (cream)</option>
+        <option value="tinted">matcha (green tint)</option>
+        <option value="warm">warm (earthy)</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">cancel</button>
+      <button class="modal-save" onclick="saveProject()">add project</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var projects = [
+  {title:"MVP campaign operations tool",org:"Flybuys · 2024–present",desc:"Designed with 20+ stakeholders across partner and data squads — streamlined targeting, eliminated manual queries, and supported a $2M+ centralised data mart project.",tags:["product strategy","snowflake / SQL","agile","stakeholder mgmt"],impact:"✦ ~14 days of process efficiency identified across 3+ teams\n✦ led change management for core campaign tables\n✦ researched AI prototyping roadmap for future business cases",style:"tinted"},
+  {title:"National aged care digital transformation",org:"Velrada · aged care client",desc:"Led requirements and feature delivery for a $2M+ national digital rollout — managing a 600+ item backlog aligned to strategic and compliance objectives. Supported go-live for 100+ field workers.",tags:["MS dynamics 365","backlog mgmt","compliance","training & go-live"],impact:"",style:""},
+  {title:"Leave approval Power App",org:"Velrada · internal",desc:"Independently designed and deployed an internal leave approval app. Achieved sustained adoption with 120+ monthly unique users from day one.",tags:["Power Apps","process design","UX","adoption"],impact:"",style:""},
+  {title:"AI consent co-design for youth mental health",org:"Orygen · 2025–present",desc:"Conducted 5+ community consultations with clinicians, researchers and young people to co-design consent processes for AI therapy scribing tools. Research findings shaped Alpha trial design.",tags:["user research","co-design","AI ethics","health tech"],impact:"",style:""},
+  {title:"Global winner — XR metaverse policy hack",org:"Seoul University × Meta · 2023",desc:"Developed a regulatory framework for immersive XR metaverse experiences, winning against international teams.",tags:["policy design","XR / metaverse","global winner"],impact:"",style:"warm"},
+  {title:"emPower community energy platform",org:"City of Nedlands · 2021",desc:"Designed a community energy data platform in collaboration with the City of Nedlands. Won the emPower Hackathon.",tags:["hackathon winner","civic tech","data platform"],impact:"",style:"warm"}
+];
+
+function renderProjects(){
+  var grid=document.getElementById('proj-grid');
+  grid.innerHTML='';
+  projects.forEach(function(p,i){
+    var impactLines=p.impact?p.impact.trim().split('\n').filter(Boolean):[];
+    var html='<div class="proj-card'+(p.style?' '+p.style:'')+'">';
+    html+='<div class="proj-photo" onclick="triggerUpload(\'pp-'+i+'\')" title="add project photo">';
+    html+='<input type="file" id="pp-'+i+'" accept="image/*" style="display:none" onchange="loadSlot(this)">';
+    html+='<img id="pp-img-'+i+'" alt="">';
+    html+='<div class="proj-photo-icon"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:var(--matcha);opacity:0.45"><path d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"/></svg></div>';
+    html+='<div class="proj-photo-hint">add cover photo</div>';
+    html+='</div>';
+    html+='<div class="proj-body">';
+    html+='<div class="proj-meta">'+escHtml(p.org)+'</div>';
+    html+='<div class="proj-title">'+escHtml(p.title)+'</div>';
+    html+='<div class="proj-desc">'+escHtml(p.desc)+'</div>';
+    if(p.tags&&p.tags.length){
+      html+='<div class="pill-row">';
+      p.tags.forEach(function(t){html+='<span class="proj-pill">'+escHtml(t)+'</span>';});
+      html+='</div>';
+    }
+    if(impactLines.length){
+      html+='<button class="expand-btn" id="btn-'+i+'" onclick="toggleImpact('+i+')">see impact ↓</button>';
+      html+='<div class="impact-rows" id="imp-'+i+'">'+impactLines.join('<br>')+'</div>';
+    }
+    html+='</div></div>';
+    var div=document.createElement('div');
+    div.innerHTML=html;
+    grid.appendChild(div.firstChild);
+  });
+}
+
+function toggleImpact(i){
+  var el=document.getElementById('imp-'+i);
+  var btn=document.getElementById('btn-'+i);
+  if(el.classList.contains('open')){el.classList.remove('open');btn.textContent='see impact ↓';}
+  else{el.classList.add('open');btn.textContent='see less ↑';}
+}
+
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelector('[onclick="switchTab(\''+name+'\')"]').classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function openModal(){document.getElementById('modal-bg').classList.add('open');}
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('open');
+  ['m-title','m-org','m-desc','m-tags','m-impact'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('m-style').value='';
+}
+function saveProject(){
+  var title=document.getElementById('m-title').value.trim();
+  if(!title)return;
+  var tagsRaw=document.getElementById('m-tags').value;
+  var tags=tagsRaw?tagsRaw.split(',').map(function(t){return t.trim();}).filter(Boolean):[];
+  projects.push({
+    title:title,
+    org:document.getElementById('m-org').value.trim(),
+    desc:document.getElementById('m-desc').value.trim(),
+    tags:tags,
+    impact:document.getElementById('m-impact').value.trim(),
+    style:document.getElementById('m-style').value
+  });
+  renderProjects();
+  closeModal();
+  switchTab('projects');
+}
+
+function triggerUpload(id){document.getElementById(id).click();}
+
+function loadImage(input,imgId,letterId){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=document.getElementById(imgId);
+    img.src=e.target.result;img.style.display='block';
+    if(letterId){var l=document.getElementById(letterId);if(l)l.style.display='none';}
+  };
+  reader.readAsDataURL(file);
+}
+
+function loadSlot(input){
+  var file=input.files[0];if(!file)return;
+  var slot=input.parentElement;
+  var img=slot.querySelector('img');
+  var reader=new FileReader();
+  reader.onload=function(e){
+    img.src=e.target.result;img.style.display='block';
+    var icon=slot.querySelector('.photo-slot-icon,.proj-photo-icon');
+    var label=slot.querySelector('.photo-slot-label,.proj-photo-hint');
+    if(icon)icon.style.display='none';
+    if(label)label.style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+renderProjects();
+</script>
+</body>
+</html>
